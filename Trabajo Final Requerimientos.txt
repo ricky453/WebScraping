@@ -1,0 +1,43 @@
+ //============================= WEB SCRAPING PAGINA WEB CINEPOLIS ============================================
+ - web scraping para los horarios de cinepolis solo de el salvador.
+ 
+- Correr script de web scraping a las 9 o 8 de la mañana en cinepolis, ya que se tiene toda la informacion ya cargada en la pag web.
+
+- Una vez ah corrido el script, debemos de obtener informacion como: Nombre de la pelicula, horarios de funcion de esa pelicula,
+esa informacion sera guardada en un archivo excel, donde la informacion ya comentada la almacenaremos en una hoja de excel con el nombre del cine a la que
+pertenece, por ejemplo, Galerias San salvador, Metrocentro santa ana, etc.
+
+//============================= SABER CUANTOS ASIENTOS SE HAN VENDIDO ============================================
+
+- Buscar uso de la libreria schedule en python para poder programar los jobs.
+
+- Cada una de las horas que aparecen en cinepolis por pelicula, le vamos a restar 2 min o 1 min, por ejemplo si la funcion es a las 10:15 am, vamos
+a programar que ingrese a las 10:13 am,entonces programaos un job para esa hora (dinamico), los pasos para ingresar al link (boton de horario) de esa hora de la funcion
+y ver cuantos asientos se han vendido antes de empezar la funcion. Basicamente en esto es programar que botones tiene que presionar hasta
+llegar a la zona de la sala y ver cuantos asientos se han vendido para esa hora de la funcion.
+
+- Cada boton tiene que tiene su hora de funcion, tiene una URL, esa URL debemos de guardarla.
+
+- En python existe un controlador automatico que se llama Selenium. Este nos ayudara para lo de ir presioando los botones.
+- chromedriver nos permite abrir Chrome automaticamente desde python
+- Hay que importar selenium en python.
+- Guadar en la nube toda la informacion en un archivo que sea del dia a dia y tener el historico de los dias anteriores a cuando comenzamos
+a correr el script.
+ 
+// =============  TIPS ING ========================
+ 
+ - Podemos hacer uso de Django, podemos guardar la info en bbdd, podemos hacer uso de Xampp ya que tiene un apache y mysql u otra herramienta y
+ esa info la subimos en un archivo en google docs.
+ -Debemos de crear un proyecto web en python y que al dar le click en boton por ejemplo "Obtener informacion"
+ correr el script que vaya a traer la informacion a la pagina web de cinepolis y dejar corriendo el job para los boletos vendidos.
+ 
+ 
+ 
+ ================ PAGINA WEB =============================
+ - 1) Crear pagina web para poder descargar la informacion de cinepolis de los horarios.
+ - 2) Crear otra pagina web para poder ver los resultados descargados. (Creo que aca quiso decir el archivo excel)
+ - 3) Crear pagina web igual que la primera solo que esa permite obtener la informacio de acuerdo a un filtrado por fecha. y ver resultado en excel.
+ 
+ En el punto 1 una vez corrido el script, en ese mismo scripts debemos de dejar corriendo los jobs (de obtencion de boletos vendidos)
+ para que se ejecuten en el curso del dia.
+ 
