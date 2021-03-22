@@ -1,0 +1,4 @@
+1) Instalar mysql en local.
+2) Importar la bd de cinepolis.sql
+3) Instalar el conector de mysql con el comando: pip install mysql-connector
+4) pip install PyMySQL
