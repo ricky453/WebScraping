@@ -7,7 +7,7 @@ class DataBase:
     servidor = "localhost"
     usuario = "root"
     contra = "" #vacio
-    bd = "pruebas"
+    bd = "cinepolis"
 
     #creando conexion
     def __init__(self):
@@ -23,5 +23,8 @@ class DataBase:
 
     def getCursor(self):
         return self.cursor
+
+    def getConnection(self):
+        return self.connection
 
     

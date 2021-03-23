@@ -1,18 +1,21 @@
 import sys
 sys.path.insert(1,'model/conexion/') 
 from conexion import DataBase
+import datetime
+from datetime import date
 
 
 class OperationCinepolis:
 
     db = DataBase()
     miCursor = db.getCursor()
+    miConnection = db.getConnection()
 
     def __init__(self):
         sql = "vacio"
     
-    def listProductos(self):
-        sql = "SELECT * FROM PRODUCTOS"
+    def listCartelera(self):
+        sql = "SELECT * FROM FUNCIONES"
 
         try:
             self.miCursor.execute(sql)
@@ -22,8 +25,8 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
-    def getProducto(self, id):
-        sql = "SELECT * FROM PRODUCTOS WHERE CÓDIGOARTÍCULO = '{}'".format(id)
+    def getFuncion(self, id):
+        sql = "SELECT * FROM FUNCIONES WHERE IDFUNCION = {}".format(id)
         try:
             self.miCursor.execute(sql)
             lista = self.miCursor.fetchone()
@@ -32,18 +35,18 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
-    def insertProducto(self, codArticulo, seccion, nomArticulo, precio, fecha, importado, paisOrigen):
-        sql = "INSERT INTO PRODUCTOS(CÓDIGOARTÍCULO, SECCIÓN, NOMBREARTÍCULO, PRECIO, FECHA, IMPORTADO, PAÍSDEORIGEN) VALUES('{}', '{}', '{}',{}, '{}', '{}', '{}')".format(codArticulo, seccion, nomArticulo, precio, fecha, importado, paisOrigen )
+    def insertCartelera(self, idFuncion, pelicula, cine, departamento, fechaFuncion, fechaActual):
+        sql = "INSERT INTO FUNCIONES(IDFUNCION, PELICULA, CINE, DEPARTAMENTO, FECHAFUNCION, FECHAACTUAL) VALUES({}, '{}', '{}','{}', '{}', '{}')".format(idFuncion, pelicula, cine, departamento, fechaFuncion, fechaActual)
 
         try:
             self.miCursor.execute(sql)
-            self.miCursor.commit()
+            self.miConnection.commit()
         except Exception as e:
             raise
 
 
 
 database = OperationCinepolis()
-database.listProductos()
-database.getProducto('AR06')
-#database.insertProducto('AR43', 'MEMES', 'DAMA', 700, '12/01/2021', 'VERDADERO', 'BAGDAK')
+database.listCartelera()
+database.getFuncion(1)
+#database.insertCartelera(2, "CABALLEROS DEL ZODIACO", "CINEPLIS METROCENTRO", "SANTA ANA", datetime.datetime.now() , date.today())
