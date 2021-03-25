@@ -25,8 +25,8 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
-    def getFuncion(self, id):
-        sql = "SELECT * FROM FUNCIONES WHERE IDFUNCION = {}".format(id)
+    def getFuncion(self, idFuncion, idPelicula, pelicula, departamento, sala, fechaFuncion, horaFuncion):
+        sql = "SELECT * FROM FUNCIONES WHERE IDFUNCION = {} AND IDPELICULA = '{}' AND PELICULA = '{}' AND DEPARTAMENTO = '{}' AND SALA = '{}' AND FECHAFUNCION = '{}' AND HORAFUNCION = '{}'".format(idFuncion, idPelicula, pelicula, departamento, sala, fechaFuncion, horaFuncion)
         try:
             self.miCursor.execute(sql)
             lista = self.miCursor.fetchone()
@@ -35,9 +35,9 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
-    def insertCartelera(self, idFuncion, pelicula, cine, departamento, fechaFuncion, fechaActual):
-        sql = "INSERT INTO FUNCIONES(IDFUNCION, PELICULA, CINE, DEPARTAMENTO, FECHAFUNCION, FECHAACTUAL) VALUES({}, '{}', '{}','{}', '{}', '{}')".format(idFuncion, pelicula, cine, departamento, fechaFuncion, fechaActual)
-
+    def insertCartelera(self, idFuncion, idPelicula, pelicula, cine, departamento, tipoDoblaje, sala, fechaFuncion, horaFuncion):
+        sql = "INSERT INTO FUNCIONES(IDFUNCION, IDPELICULA, PELICULA, CINE, DEPARTAMENTO, TIPO_DOBLAJE, SALA, FECHAFUNCION, HORAFUNCION) VALUES({}, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(idFuncion, idPelicula, pelicula, cine, departamento, tipoDoblaje, sala,fechaFuncion, horaFuncion)
+        print(sql)
         try:
             self.miCursor.execute(sql)
             self.miConnection.commit()
@@ -46,7 +46,7 @@ class OperationCinepolis:
 
 
 
-database = OperationCinepolis()
+database = OperationCinepolis() 
 database.listCartelera()
-database.getFuncion(1)
-#database.insertCartelera(2, "CABALLEROS DEL ZODIACO", "CINEPLIS METROCENTRO", "SANTA ANA", datetime.datetime.now() , date.today())
+database.getFuncion(1, 'get_ticket123', 'ATAQUE A LOS TITANES', 'SAN SALVADOR', '1', datetime.date(2021, 3, 22), '17:05')
+#database.insertCartelera(3, "get_ticket145", "EL PEPE", "CINEPOLIS SANTA ANA", "SANTA ANA", "TRADICIONAL", "2", date.today(), '19:45')

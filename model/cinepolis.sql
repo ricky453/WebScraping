@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-03-2021 a las 02:29:30
+-- Tiempo de generación: 25-03-2021 a las 03:17:47
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.0
 
@@ -29,15 +29,26 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `funciones` (
   `idFuncion` int(11) NOT NULL,
+  `idPelicula` varchar(150) NOT NULL,
   `pelicula` varchar(300) NOT NULL,
   `cine` varchar(300) NOT NULL,
   `departamento` varchar(100) NOT NULL,
-  `fechaFuncion` datetime NOT NULL,
-  `fechaActual` date NOT NULL,
-  `sala` varchar(100) DEFAULT NULL,
+  `tipo_doblaje` varchar(100) NOT NULL,
+  `sala` varchar(100) NOT NULL,
   `asientosOcupados` int(11) DEFAULT NULL,
-  `asientosTotales` int(11) DEFAULT NULL
+  `asientosTotales` int(11) DEFAULT NULL,
+  `fechaFuncion` date NOT NULL,
+  `horaFuncion` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `funciones`
+--
+
+INSERT INTO `funciones` (`idFuncion`, `idPelicula`, `pelicula`, `cine`, `departamento`, `tipo_doblaje`, `sala`, `asientosOcupados`, `asientosTotales`, `fechaFuncion`, `horaFuncion`) VALUES
+(1, 'get_ticket123', 'ATAQUE A LOS TITANES', 'CINEPOLIS GALERIAS', 'SAN SALVADOR', '', '1', NULL, NULL, '2021-03-22', '17:05'),
+(2, 'get_ticket4321', 'CABALLEROS DEL ZODIACO', 'CINEPLIS METROCENTRO', 'SANTA ANA', '', '2', NULL, NULL, '2021-03-22', ''),
+(3, 'get_ticket145', 'EL PEPE', 'CINEPOLIS SANTA ANA', 'SANTA ANA', 'TRADICIONAL', '2', NULL, NULL, '2021-03-24', '19:45');
 
 --
 -- Índices para tablas volcadas
@@ -47,17 +58,7 @@ CREATE TABLE `funciones` (
 -- Indices de la tabla `funciones`
 --
 ALTER TABLE `funciones`
-  ADD PRIMARY KEY (`idFuncion`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `funciones`
---
-ALTER TABLE `funciones`
-  MODIFY `idFuncion` int(11) NOT NULL AUTO_INCREMENT;
+  ADD PRIMARY KEY (`idFuncion`,`idPelicula`,`pelicula`,`departamento`,`sala`,`fechaFuncion`,`horaFuncion`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
