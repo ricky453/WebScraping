@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2021 a las 03:17:47
+-- Tiempo de generación: 25-03-2021 a las 03:36:29
 -- Versión del servidor: 10.4.17-MariaDB
 -- Versión de PHP: 8.0.0
 
@@ -28,12 +28,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `funciones` (
-  `idFuncion` int(11) NOT NULL,
   `idPelicula` varchar(150) NOT NULL,
   `pelicula` varchar(300) NOT NULL,
   `cine` varchar(300) NOT NULL,
   `departamento` varchar(100) NOT NULL,
-  `tipo_doblaje` varchar(100) NOT NULL,
+  `tipo_doblaje` varchar(100) DEFAULT NULL,
   `sala` varchar(100) NOT NULL,
   `asientosOcupados` int(11) DEFAULT NULL,
   `asientosTotales` int(11) DEFAULT NULL,
@@ -45,10 +44,12 @@ CREATE TABLE `funciones` (
 -- Volcado de datos para la tabla `funciones`
 --
 
-INSERT INTO `funciones` (`idFuncion`, `idPelicula`, `pelicula`, `cine`, `departamento`, `tipo_doblaje`, `sala`, `asientosOcupados`, `asientosTotales`, `fechaFuncion`, `horaFuncion`) VALUES
-(1, 'get_ticket123', 'ATAQUE A LOS TITANES', 'CINEPOLIS GALERIAS', 'SAN SALVADOR', '', '1', NULL, NULL, '2021-03-22', '17:05'),
-(2, 'get_ticket4321', 'CABALLEROS DEL ZODIACO', 'CINEPLIS METROCENTRO', 'SANTA ANA', '', '2', NULL, NULL, '2021-03-22', ''),
-(3, 'get_ticket145', 'EL PEPE', 'CINEPOLIS SANTA ANA', 'SANTA ANA', 'TRADICIONAL', '2', NULL, NULL, '2021-03-24', '19:45');
+INSERT INTO `funciones` (`idPelicula`, `pelicula`, `cine`, `departamento`, `tipo_doblaje`, `sala`, `asientosOcupados`, `asientosTotales`, `fechaFuncion`, `horaFuncion`) VALUES
+('get_ticket123', 'ATAQUE A LOS TITANES', 'CINEPOLIS GALERIAS', 'SAN SALVADOR', '', '1', NULL, NULL, '2021-03-22', '17:05'),
+('get_ticket144', 'EL PEPE', 'CINEPOLIS SANTA ANA', 'SANTA ANA', 'TRADICIONAL', '2', NULL, NULL, '2021-03-24', '19:45'),
+('get_ticket145', 'EL PEPE', 'CINEPOLIS SANTA ANA', 'SANTA ANA', 'TRADICIONAL', '2', NULL, NULL, '2021-03-24', '19:45'),
+('get_ticket1499', 'EL CAMPEOM', 'CINEPOLIS SANTA ANA', 'METAPAN', NULL, '1', NULL, NULL, '2021-03-24', '19:45'),
+('get_ticket4321', 'CABALLEROS DEL ZODIACO', 'CINEPLIS METROCENTRO', 'SANTA ANA', '', '2', NULL, NULL, '2021-03-22', '');
 
 --
 -- Índices para tablas volcadas
@@ -58,7 +59,7 @@ INSERT INTO `funciones` (`idFuncion`, `idPelicula`, `pelicula`, `cine`, `departa
 -- Indices de la tabla `funciones`
 --
 ALTER TABLE `funciones`
-  ADD PRIMARY KEY (`idFuncion`,`idPelicula`,`pelicula`,`departamento`,`sala`,`fechaFuncion`,`horaFuncion`);
+  ADD PRIMARY KEY (`idPelicula`,`pelicula`,`departamento`,`sala`,`fechaFuncion`,`horaFuncion`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

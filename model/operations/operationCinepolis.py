@@ -25,8 +25,8 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
-    def getFuncion(self, idFuncion, idPelicula, pelicula, departamento, sala, fechaFuncion, horaFuncion):
-        sql = "SELECT * FROM FUNCIONES WHERE IDFUNCION = {} AND IDPELICULA = '{}' AND PELICULA = '{}' AND DEPARTAMENTO = '{}' AND SALA = '{}' AND FECHAFUNCION = '{}' AND HORAFUNCION = '{}'".format(idFuncion, idPelicula, pelicula, departamento, sala, fechaFuncion, horaFuncion)
+    def getFuncion(self, idPelicula, pelicula, departamento, sala, fechaFuncion, horaFuncion):
+        sql = "SELECT * FROM FUNCIONES WHERE IDPELICULA = '{}' AND PELICULA = '{}' AND DEPARTAMENTO = '{}' AND SALA = '{}' AND FECHAFUNCION = '{}' AND HORAFUNCION = '{}'".format(idPelicula, pelicula, departamento, sala, fechaFuncion, horaFuncion)
         try:
             self.miCursor.execute(sql)
             lista = self.miCursor.fetchone()
@@ -35,8 +35,8 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
-    def insertCartelera(self, idFuncion, idPelicula, pelicula, cine, departamento, tipoDoblaje, sala, fechaFuncion, horaFuncion):
-        sql = "INSERT INTO FUNCIONES(IDFUNCION, IDPELICULA, PELICULA, CINE, DEPARTAMENTO, TIPO_DOBLAJE, SALA, FECHAFUNCION, HORAFUNCION) VALUES({}, '{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(idFuncion, idPelicula, pelicula, cine, departamento, tipoDoblaje, sala,fechaFuncion, horaFuncion)
+    def insertCartelera(self, idPelicula, pelicula, cine, departamento, sala, fechaFuncion, horaFuncion):
+        sql = "INSERT INTO FUNCIONES(IDPELICULA, PELICULA, CINE, DEPARTAMENTO, SALA, FECHAFUNCION, HORAFUNCION) VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(idPelicula, pelicula, cine, departamento, sala,fechaFuncion, horaFuncion)
         print(sql)
         try:
             self.miCursor.execute(sql)
@@ -48,5 +48,5 @@ class OperationCinepolis:
 
 database = OperationCinepolis() 
 database.listCartelera()
-database.getFuncion(1, 'get_ticket123', 'ATAQUE A LOS TITANES', 'SAN SALVADOR', '1', datetime.date(2021, 3, 22), '17:05')
-#database.insertCartelera(3, "get_ticket145", "EL PEPE", "CINEPOLIS SANTA ANA", "SANTA ANA", "TRADICIONAL", "2", date.today(), '19:45')
+database.getFuncion('get_ticket1499', 'EL CAMPEOM', 'METAPAN','1', datetime.date(2021, 3, 24), '19:45')
+#database.insertCartelera("get_ticket1499", "EL CAMPEOM", "CINEPOLIS SANTA ANA", "METAPAN", "1", date.today(), '19:45')
