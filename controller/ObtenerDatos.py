@@ -4,12 +4,16 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
-#from selenium.webdriver.common.keys import Keys
 import time
 from datetime import datetime
-#import pandas as pd
+#Para que la bd
+import sys
+sys.path.insert(1, 'model/operations/')
+from operationCinepolis import OperationCinepolis
+
 #fecha de hoy
 fechaActual= datetime.now()
+fechaActual= fechaActual.date()
 dia=fechaActual.day
 
 driver_path = 'C:\\Users\\ivanp\\Desktop\\TrabajoFinal\\chromedriver.exe'
@@ -71,7 +75,7 @@ while count_dept<=2:
             time.sleep(4)
             #SELECCIONAR HORAS
             #cantidad de cines y recorrer cada uno
-            wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]')))
+            wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul')))
             count_li_cines = len(driver.find_elements_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li')) 
             count_cine=1
             while count_cine<=count_li_cines:
@@ -84,13 +88,14 @@ while count_dept<=2:
                     
                     count_hora=1
                     while count_hora<=count_divs_hora:
-                        tipo_doblaje1 = driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[1]/span').text
-                        tipo_doblaje2 = driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[1]/h5').text
-                    
+                        
                         text_path='//*[@id="main-app"]/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[2]/div['+str(count_hora)+']'
                         wait_path=wait.until(EC.presence_of_element_located((By.XPATH,text_path)))
                         wait_path.location_once_scrolled_into_view
                         time.sleep(0.5)
+                        tipo_doblaje1 = driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[1]/span').text
+                        tipo_doblaje2 = driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[1]/h5').text
+                    
                         wait_path.click()
                         time.sleep(0.3)
                         
@@ -106,17 +111,11 @@ while count_dept<=2:
                         nombre_cine=driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/div/div/div/div[2]/div[2]').text
                         hora_sala=driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/div/div/div/div[2]/div[4]').text
                         lista_hora_sala_string = hora_sala.split(' ')
-                        print('###########################')
-                        print(dept)
-                        print(id_peli)
-                        print(nombre_peli)
-                        print(nombre_cine)
-                        print(lista_hora_sala_string[0])# hora
-                        print(lista_hora_sala_string[1])# sala:
-                        print(lista_hora_sala_string[2])# numerosala    
-                        print(tipo_doblaje1)
-                        print(tipo_doblaje2)
-
+                        tipo_doblaje= tipo_doblaje1+tipo_doblaje2
+                        
+                        database = OperationCinepolis() 
+                        database.insertCartelera(id_peli,nombre_peli,dept,nombre_cine,tipo_doblaje,fechaActual,lista_hora_sala_string[0],lista_hora_sala_string[2])
+                        print('success insert')
                         driver.back()
                         time.sleep(3)
                         #localizar y seleccionar dia
@@ -124,7 +123,7 @@ while count_dept<=2:
                         wait_path.location_once_scrolled_into_view
                         time.sleep(0.5)
                         wait_path.click()
-                        time.sleep(1)
+                        time.sleep(3)
                         count_hora+=1
                     count_tipocine+=1
                 count_cine+=1
@@ -136,33 +135,3 @@ while count_dept<=2:
     count_localted_cine-=1
 driver.quit()
 
-
-#path de la tabla donde estan los asientos
-# /html/body/main/div/div/div[5]/div/div[4]/div/div/div[4]/div/div        
-
-#path del dia
-#                                                                      
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[2]/div[1]/div/div[1]/div/label/div[2]
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[2]/div[1]/div/div[2]/div/label/div[2]
-
-#path de la hora 
-#                                                                       
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[1]/div[2]/div[1]/div[2]/div[1]/label  doblada
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[1]/div[2]/div[1]/div[2]/div[2]/label  doblada
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[1]/div[2]/div[2]/div[2]/div   /label     sub
-
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[2]/div[2]/div   /div[2]/div[1]/label     dob
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[2]/div[2]/div   /div[2]/div[2]/label     dob
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[2]/div[2]/div   /div[2]/div[3]/label     dob
-
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[3]/div[2]/div   /div[2]/div[1]/label     dob
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[3]/div[2]/div   /div[2]/div[2]/label     dob
-#                                                                                     /cines       /dob o sub
-#                                                                                                                /hora
-# /html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[1]/div[2]/div/div[1]
-#path de pelicula
-
-# /html/body/main/div/div/div[5]/section[5]/div/div/div[1]/div[2]/button
-# /html/body/main/div/div/div[5]/section[5]/div/div/div[2]/div[2]/button
-# /html/body/main/div/div/div[5]/section[5]/div/div/div[9]/div[2]/button
-# /html/body/main/div/div/div[5]/section[5]/div/div/div[1]/div[1]/img

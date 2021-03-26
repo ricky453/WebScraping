@@ -1,67 +1,58 @@
--- phpMyAdmin SQL Dump
--- version 5.0.4
--- https://www.phpmyadmin.net/
+-- MySQL dump 10.13  Distrib 8.0.23, for Win64 (x86_64)
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 25-03-2021 a las 03:36:29
--- Versión del servidor: 10.4.17-MariaDB
--- Versión de PHP: 8.0.0
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
-SET time_zone = "+00:00";
-
+-- Host: localhost    Database: cinepolis
+-- ------------------------------------------------------
+-- Server version	8.0.23
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Base de datos: `cinepolis`
+-- Table structure for table `funciones`
 --
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `funciones`
---
-
+DROP TABLE IF EXISTS `funciones`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `funciones` (
   `idPelicula` varchar(150) NOT NULL,
   `pelicula` varchar(300) NOT NULL,
-  `cine` varchar(300) NOT NULL,
   `departamento` varchar(100) NOT NULL,
-  `tipo_doblaje` varchar(100) DEFAULT NULL,
-  `sala` varchar(100) NOT NULL,
-  `asientosOcupados` int(11) DEFAULT NULL,
-  `asientosTotales` int(11) DEFAULT NULL,
+  `cine` varchar(300) NOT NULL,
+  `tipo_doblaje` varchar(100) NOT NULL,
   `fechaFuncion` date NOT NULL,
-  `horaFuncion` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `horaFuncion` varchar(50) NOT NULL,
+  `sala` varchar(100) NOT NULL,
+  `asientosOcupados` int DEFAULT NULL,
+  `asientosTotales` int DEFAULT NULL,
+  PRIMARY KEY (`idPelicula`,`departamento`,`cine`,`tipo_doblaje`,`fechaFuncion`,`horaFuncion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Volcado de datos para la tabla `funciones`
+-- Dumping data for table `funciones`
 --
 
-INSERT INTO `funciones` (`idPelicula`, `pelicula`, `cine`, `departamento`, `tipo_doblaje`, `sala`, `asientosOcupados`, `asientosTotales`, `fechaFuncion`, `horaFuncion`) VALUES
-('get_ticket123', 'ATAQUE A LOS TITANES', 'CINEPOLIS GALERIAS', 'SAN SALVADOR', '', '1', NULL, NULL, '2021-03-22', '17:05'),
-('get_ticket144', 'EL PEPE', 'CINEPOLIS SANTA ANA', 'SANTA ANA', 'TRADICIONAL', '2', NULL, NULL, '2021-03-24', '19:45'),
-('get_ticket145', 'EL PEPE', 'CINEPOLIS SANTA ANA', 'SANTA ANA', 'TRADICIONAL', '2', NULL, NULL, '2021-03-24', '19:45'),
-('get_ticket1499', 'EL CAMPEOM', 'CINEPOLIS SANTA ANA', 'METAPAN', NULL, '1', NULL, NULL, '2021-03-24', '19:45'),
-('get_ticket4321', 'CABALLEROS DEL ZODIACO', 'CINEPLIS METROCENTRO', 'SANTA ANA', '', '2', NULL, NULL, '2021-03-22', '');
+LOCK TABLES `funciones` WRITE;
+/*!40000 ALTER TABLE `funciones` DISABLE KEYS */;
+/*!40000 ALTER TABLE `funciones` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `funciones`
---
-ALTER TABLE `funciones`
-  ADD PRIMARY KEY (`idPelicula`,`pelicula`,`departamento`,`sala`,`fechaFuncion`,`horaFuncion`);
-COMMIT;
-
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2021-03-25 15:58:20
