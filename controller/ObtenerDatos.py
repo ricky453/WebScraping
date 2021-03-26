@@ -114,7 +114,7 @@ while count_dept<=2:
                         tipo_doblaje= tipo_doblaje1+tipo_doblaje2
                         
                         database = OperationCinepolis() 
-                        database.insertCartelera(id_peli,nombre_peli,dept,nombre_cine,tipo_doblaje,fechaActual,lista_hora_sala_string[0],lista_hora_sala_string[2])
+                        database.insertFunsiones(id_peli,nombre_peli,dept,nombre_cine,tipo_doblaje,fechaActual,lista_hora_sala_string[0],lista_hora_sala_string[2])
                         print('success insert')
                         driver.back()
                         time.sleep(3)

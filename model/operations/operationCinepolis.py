@@ -14,8 +14,8 @@ class OperationCinepolis:
     def __init__(self):
         sql = "vacio"
     
-    def listCartelera(self):
-        sql = "SELECT * FROM FUNCIONES"
+    def funcionesPorDia(self, fechaFuncion):
+        sql = "SELECT * FROM FUNCIONES WHERE FECHAFUNCION = '{}' ORDER BY HORAFUNCION ASC".format(fechaFuncion)
 
         try:
             self.miCursor.execute(sql)
@@ -35,7 +35,7 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
-    def insertCartelera(self, idPelicula, pelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala):
+    def insertFunsiones(self, idPelicula, pelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala):
         sql = "INSERT INTO FUNCIONES(IDPELICULA, PELICULA, DEPARTAMENTO, CINE, TIPO_DOBLAJE, FECHAFUNCION, HORAFUNCION, SALA) VALUES('{}', '{}', '{}', '{}', '{}', '{}', '{}', '{}')".format(idPelicula, pelicula, departamento, cine, tipo_doblaje,fechaFuncion, horaFuncion, sala)
         print(sql)
         try:
@@ -54,10 +54,7 @@ class OperationCinepolis:
             raise
 
 
-database = OperationCinepolis() 
-database.listCartelera()
 # falta consulta para saber si el registro existe:
 # select count(*) from FUNCIONES WHERE IDPELICULA = '{}' AND DEPARTAMENTO = '{}' AND CINE = '{}' AND TIPO_DOBLAJE = '{}' AND FECHAFUNCION = '{}' AND HORAFUNCION = '{}'
-#falta consulta de toda la tabla por fecha
-#database.getFuncion(idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion)
+
 #database.insertCartelera(idPelicula, pelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala)
