@@ -1,15 +1,20 @@
 import schedule
 import time
 from datetime import datetime
+from datetime import date
+from BuscarPeli import Buscar_Peli
 
+import sys
+sys.path.insert(1, 'model/operations/')
+from operationCinepolis import OperationCinepolis
 
-def job(hora, nombre):
-    print("Leyendo tiempo... "+hora+" - "+nombre)
+metodo = Buscar_Peli()
 
+def saludar():
+    print("hola")
 
-def coding():
-    print("Codigo...")
-
+def obtenerDatos():
+    import obtenerDatos
 
 def restar_hora(hora1, hora2):
     formato = "%H:%M"
@@ -24,18 +29,21 @@ def restar_hora(hora1, hora2):
     else:
         return str(resultado)
 
+def mandarInfo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora):
+    metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+
+def obtenerCupo():
+    database = OperationCinepolis()
+    horarios = database.funcionesPorDia(date.today())
+    if(len(horarios)>0):
+        for i in range(len(horarios)):
+            newHora = restar_hora(horarios[i][9], "00:05")
+            schedule.every().day.at(newHora).do(mandarInfo, horarios[i][0], horarios[i][3], horarios[i][2], horarios[i][4], horarios[i][8], horarios[i][9])
 
 # Time
-horarios = [["09:11", "Ivan"], ["09:11", "Kike"], [
-    "09:12", "Ricardo"], ["09:13", "Pedro"], ["09:14", "Nadie"]]
+schedule.every().day.at("07:00").do(obtenerDatos)
 
-for i in range(len(horarios)):
-    newHora = restar_hora(horarios[i][0], "00:02")
-    print(newHora)
-    # print(horarios[i][0])
-    schedule.every().day.at(newHora).do(job, horarios[i][0], horarios[i][1])
-
-schedule.every(10).seconds.do(coding)
+obtenerCupo()
 
 while True:
     schedule.run_pending()

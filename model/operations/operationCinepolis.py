@@ -10,20 +10,26 @@ class OperationCinepolis:
     db = DataBase()
     miCursor = db.getCursor()
     miConnection = db.getConnection()
-
+    
     def __init__(self):
         sql = "vacio"
     
     def funcionesPorDia(self, fechaFuncion):
+        nuevalista = []
         sql = "SELECT * FROM FUNCIONES WHERE FECHAFUNCION = '{}' ORDER BY HORAFUNCION ASC".format(fechaFuncion)
 
         try:
             self.miCursor.execute(sql)
             lista = self.miCursor.fetchall()
             for item in lista:
-                print(item)
+                nuevalista.append(item)
+            return nuevaLista
         except Exception as e:
+            return nuevalista
             raise
+        
+        
+
 
     def getFuncion(self, idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion):
         sql = "SELECT * FROM FUNCIONES WHERE IDPELICULA = '{}' AND DEPARTAMENTO = '{}' AND CINE = '{}' AND TIPO_DOBLAJE = '{}' AND FECHAFUNCION = '{}' AND HORAFUNCION = '{}'".format(idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion)
