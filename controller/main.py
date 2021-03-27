@@ -34,23 +34,24 @@ def mandarInfo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_dobl
     metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
     database = OperationCinepolis()
     cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-    print(buscar_dept)
-    print(buscar_id_peli)
-    print("cupo")
-    print(cupo)
+    intentos = 0
     while cupo == None:
         print("entró en el while")
-        metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-        cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-        print("nuevo cupo")
-        print(cupo)
+        if intentos < 5:
+            metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+            cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+            intentos = intentos + 1
+            print("Intentos: " + str(intentos))
+        else:
+            break
+
 
 def obtenerCupo():
     database = OperationCinepolis()
     horarios = database.funcionesPorDia(date.today())
     if(len(horarios)>0):
         for i in range(len(horarios)):
-            newHora = restar_hora(horarios[i][9], "01:31")
+            newHora = restar_hora(horarios[i][9], "00:36")
             schedule.every().day.at(newHora).do(mandarInfo, horarios[i][0], horarios[i][3], horarios[i][2], horarios[i][4], horarios[i][8], horarios[i][9])
     else:
         obtenerDatos()
