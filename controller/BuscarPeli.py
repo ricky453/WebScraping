@@ -9,6 +9,7 @@ from datetime import datetime
 #Para que la bd
 import sys
 sys.path.insert(1, 'model/operations/')
+sys.path.insert(1, 'temp/chromedriver/')
 from operationCinepolis import OperationCinepolis
 
 class Buscar_Peli:
@@ -20,7 +21,7 @@ class Buscar_Peli:
         fechaActual= fecha
         dia=fechaActual.day
         finalizado=False
-        driver_path = 'C:\\Users\\ivanp\\Desktop\\TrabajoFinal\\chromedriver.exe'
+        driver_path = 'temp/chromedriver/chromedriver.exe'
 
         driver = webdriver.Chrome(driver_path)
         driver.maximize_window()

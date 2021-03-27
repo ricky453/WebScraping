@@ -9,6 +9,7 @@ from datetime import datetime
 #Para que la bd
 import sys
 sys.path.insert(1, 'model/operations/')
+sys.path.insert(1, 'temp/chromedriver/')
 from operationCinepolis import OperationCinepolis
 
 #fecha de hoy
@@ -16,7 +17,7 @@ fechaActual= datetime.now()
 fechaActual= fechaActual.date()
 dia=fechaActual.day
 
-driver_path = 'C:\\Users\\ivanp\\Desktop\\TrabajoFinal\\chromedriver.exe'
+driver_path = 'temp/chromedriver/chromedriver.exe'
 
 driver = webdriver.Chrome(driver_path)
 driver.maximize_window()
