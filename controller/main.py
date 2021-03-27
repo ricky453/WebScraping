@@ -14,7 +14,7 @@ def saludar():
     print("hola")
 
 def obtenerDatos():
-    import obtenerDatos
+    import ObtenerDatos
 
 def restar_hora(hora1, hora2):
     formato = "%H:%M"
@@ -37,8 +37,12 @@ def obtenerCupo():
     horarios = database.funcionesPorDia(date.today())
     if(len(horarios)>0):
         for i in range(len(horarios)):
-            newHora = restar_hora(horarios[i][9], "00:05")
+            newHora = restar_hora(horarios[i][9], "00:02")
             schedule.every().day.at(newHora).do(mandarInfo, horarios[i][0], horarios[i][3], horarios[i][2], horarios[i][4], horarios[i][8], horarios[i][9])
+    else:
+        obtenerDatos()
+        obtenerCupo()
+
 
 # Time
 schedule.every().day.at("07:00").do(obtenerDatos)
