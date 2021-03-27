@@ -59,7 +59,16 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
-
+    def getCupo(self, idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion):
+        lista = None
+        sql = "SELECT ASIENTOSOCUPADOS FROM FUNCIONES WHERE IDPELICULA = '{}' AND DEPARTAMENTO = '{}' AND CINE = '{}' AND TIPO_DOBLAJE = '{}' AND FECHAFUNCION = '{}' AND HORAFUNCION = '{}'".format(idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchone()
+            return lista[0]
+        except Exception as e:
+            return lista
+            raise
 # falta consulta para saber si el registro existe:
 # select count(*) from FUNCIONES WHERE IDPELICULA = '{}' AND DEPARTAMENTO = '{}' AND CINE = '{}' AND TIPO_DOBLAJE = '{}' AND FECHAFUNCION = '{}' AND HORAFUNCION = '{}'
 
