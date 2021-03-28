@@ -14,7 +14,15 @@ def saludar():
     print("hola")
 
 def obtenerDatos():
-    import ObtenerDatos
+    #true>en ejecucion. false>no seguir en ejecuci[on
+    ejecucion=True 
+    while ejecucion==True:
+        try:
+            import ObtenerDatos
+            ejecucion=False
+        except Exception as e:
+            ejecucion=True
+
     obtenerCupo()
 
 def restar_hora(hora1, hora2):
@@ -33,18 +41,14 @@ def restar_hora(hora1, hora2):
 def mandarInfo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora):
     metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
     database = OperationCinepolis()
-    cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-    intentos = 0
-    while cupo == None:
-        print("entró en el while")
-        if intentos < 5:
+    
+    while ejecucion==True:
+        try:
             metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-            cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-            intentos = intentos + 1
-            print("Intentos: " + str(intentos))
-        else:
-            break
-
+            ejecucion=False
+        except Exception as e:
+            ejecucion=True
+    
 
 def obtenerCupo():
     database = OperationCinepolis()

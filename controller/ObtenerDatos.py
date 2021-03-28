@@ -22,35 +22,32 @@ driver = webdriver.Chrome(driver_path)
 driver.maximize_window()
 # Inicializamos el navegador
 driver.get('https://www.cinepolis.com.sv/cartelera/')
-wait=WebDriverWait(driver, 60)
+wait=WebDriverWait(driver, 20)
 
-count_localted_cine=3
 count_dept=1
 while count_dept<=2:
     #selecciona buscador de departamento
     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,
         'input#cityBillboardSearch.el-input__inner')))\
             .click()
-    dept=driver.find_element_by_xpath('/html/body/div[2]/div[1]/div[1]/ul/li['+str(count_dept)+']').text
-    #selecciona san salvador
-    wait.until(EC.element_to_be_clickable((By.XPATH, 
-        '/html/body/div[2]/div[1]/div[1]/ul/li['+str(count_dept)+']')))\
-            .click()
-    time.sleep(2)
+    if(count_dept==1):
+        dept='San Salvador'
+        wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="238"]'))).click()
+    elif(count_dept==2):
+        dept='Santa Ana'
+        wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="239"]'))).click()
+    time.sleep(1)
     #selecciona buscador de cine
     wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,
         'input#cinemaBillboardSearch.el-input__inner')))\
-            .click()
-    #selecciona todos los cines
-    wait.until(EC.element_to_be_clickable((By.XPATH, 
-        '/html/body/div['+str(count_localted_cine)+']/div[1]/div[1]/ul/li[1]')))\
-            .click()
-            
+        .click()
+    wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="-1"]'))).click()
+    
     time.sleep(2)
     #SELECCIONAR PELICUAL
-
+    
     #cantidad de peliculas y recorrer en bucle
-    count_divs_peliculas = len(driver.find_elements_by_xpath("/html/body/main/div/div/div[5]/section[5]/div/div/div")) 
+    count_divs_peliculas = len(driver.find_elements_by_xpath("/html/body/main/div/div/div[5]/section[5]/div/div/div"))
     count_pelicula=1    
     while count_pelicula<=count_divs_peliculas:
 
@@ -72,11 +69,12 @@ while count_dept<=2:
 
         if(dia==int(numero_dia.text)): #saber si la fecha actual es igual al dia seleccionado en la pagina
             wait_path.click() 
-            time.sleep(4)
+            time.sleep(5)
             #SELECCIONAR HORAS
             #cantidad de cines y recorrer cada uno
-            wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul')))
+            wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[1]')))
             count_li_cines = len(driver.find_elements_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li')) 
+            
             count_cine=1
             while count_cine<=count_li_cines:
                 #cantidad de tipos de doblaje que tiene la pelicula y recorrer cada uno
@@ -114,8 +112,11 @@ while count_dept<=2:
                         tipo_doblaje= tipo_doblaje1+tipo_doblaje2
                         
                         database = OperationCinepolis() 
-                        database.insertFunsiones(id_peli,nombre_peli,dept,nombre_cine,tipo_doblaje,fechaActual,lista_hora_sala_string[0],lista_hora_sala_string[2])
-                        print('success insert')
+                        countRegistro=database.comprobarExistenciaFuncion(id_peli,dept,nombre_cine,tipo_doblaje,fechaActual,lista_hora_sala_string[0])
+                        if(countRegistro==0):
+                            database.insertFunsiones(id_peli,nombre_peli,dept,nombre_cine,tipo_doblaje,fechaActual,lista_hora_sala_string[0],lista_hora_sala_string[2])
+                            print('success insert')
+                        
                         driver.back()
                         time.sleep(3)
                         #localizar y seleccionar dia
@@ -132,6 +133,5 @@ while count_dept<=2:
         time.sleep(1)
         count_pelicula+=1
     count_dept+=1
-    count_localted_cine-=1
 driver.quit()
 

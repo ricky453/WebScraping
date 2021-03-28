@@ -21,32 +21,25 @@ class Buscar_Peli:
         #fecha de hoy
         fechaActual= fecha
         dia=fechaActual.day
-        finalizado=False
-        driver_path = 'C:\\Users\\ricardo.barrientos\\Desktop\\chromedriver.exe'
+        finalizado=False 
 
+        driver_path = 'C:\\Users\\ricardo.barrientos\\Desktop\\chromedriver.exe'
         driver = webdriver.Chrome(driver_path)
         driver.maximize_window()
         # Inicializamos el navegador
         driver.get('https://www.cinepolis.com.sv/cartelera/')
-        wait=WebDriverWait(driver, 60)
+        wait=WebDriverWait(driver, 20)
 
-        count_localted_cine=3
-        count_dept=1
-        if buscar_dept== 'San Salvador':
-            count_dept=1
-            count_localted_cine=3
-        elif buscar_dept== 'Santa Ana':
-            count_dept=2
-            count_localted_cine=2
 
         #selecciona buscador de departamento
         wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,
             'input#cityBillboardSearch.el-input__inner')))\
                 .click()
-        #selecciona san salvador o santa ana
-        wait.until(EC.element_to_be_clickable((By.XPATH, 
-            '/html/body/div[2]/div[1]/div[1]/ul/li['+str(count_dept)+']')))\
-                .click()
+        #seleccionar dept
+        if(buscar_dept=='San Salvador'):
+            wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="238"]'))).click()
+        elif (buscar_dept=='Santa Ana'):
+            wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="239"]'))).click()
         time.sleep(2)
         #selecciona buscador de cine
         wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR,
@@ -54,7 +47,7 @@ class Buscar_Peli:
                 .click()
         #selecciona todos los cines
         wait.until(EC.element_to_be_clickable((By.XPATH, 
-            '/html/body/div['+str(count_localted_cine)+']/div[1]/div[1]/ul/li[1]')))\
+            '//*[@id="-1"]')))\
                 .click()
                     
         time.sleep(2)
@@ -76,15 +69,15 @@ class Buscar_Peli:
         print(str(dia)+'##dias##'+numero_dia.text)
         if(dia==int(numero_dia.text)): 
             wait_path.click() 
-            time.sleep(4)
+            time.sleep(5)
             #SELECCIONAR HORAS
-            wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul')))
+            wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[1]')))
             #cantidad de cines y recorrer cada uno
             count_li_cines = len(driver.find_elements_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li')) 
             
             count_cine=1
             while count_cine<=count_li_cines:
-
+                encontrado=False 
                 nombre_cine=driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[1]/div[1]/h3').text
                 if(buscar_nombre_cine==nombre_cine):
                     #cantidad de tipos de doblaje que tiene la pelicula y recorrer cada uno
@@ -94,25 +87,27 @@ class Buscar_Peli:
                         
                         #cantidad de horarios que hay en un tipo de dobleje de una pelicula y recorrer cada uno
                         count_divs_hora=len(driver.find_elements_by_xpath('//*[@id="main-app"]/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[2]/div'))
-                                
+
                         count_hora=1
                         while count_hora<=count_divs_hora:
                         
                             #seleccionar cada hora
                             text_path='//*[@id="main-app"]/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[2]/div['+str(count_hora)+']'
                             wait_path=wait.until(EC.presence_of_element_located((By.XPATH,text_path)))
-                            wait_path.location_once_scrolled_into_view
-                            time.sleep(0.5)
+                            
                             #recolectar el tipo de doblaje cuando se recorre bucle de las horas
                             tipo_doblaje1 = driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[1]/span').text
                             tipo_doblaje2 = driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[1]/h5').text
                             tipo_doblaje=tipo_doblaje1+tipo_doblaje2 
-                            print('#'+tipo_doblaje+'#')                   
+                                            
                             if(buscar_tipo_doblaje==tipo_doblaje):
                                 hora_peli=driver.find_element_by_xpath(text_path).text
                                 if(buscar_hora==hora_peli):
+                                    wait_path.location_once_scrolled_into_view
+                                    time.sleep(0.5)
                                     wait_path.click()
                                     time.sleep(0.3)
+                                    encontrado=True
                                     #seleccionar el botton
                                     wait_path=wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="buyTickets"]')))
                                     wait_path.location_once_scrolled_into_view
@@ -137,7 +132,7 @@ class Buscar_Peli:
                                     database.updateAsientosOcupados(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora, count)
                                     
                                     finalizado=True
-                                    break
+                                    break     
                             else:
                                 break
                             #termina if del tipo de doblaje
@@ -145,6 +140,8 @@ class Buscar_Peli:
                         if(finalizado): 
                             break
                         count_tipocine+=1
+                    if(encontrado==False):
+                        print('no existe la funcion que se desea buscar en la pagina')
                     if(finalizado): 
                         break
                 #termina if(buscar_nombre_cine==nombre_cine)  
