@@ -59,6 +59,36 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
+    def getCines(self, fechaBuscar):
+        sql = "SELECT DISTINCT CINE FROM FUNCIONES WHERE FECHAFUNCION = '{}'".format(fechaBuscar)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchall()
+
+            return lista
+        except Exception as e:
+            raise
+    
+    def getPeliculasFunciones(self, cine, fechaBuscar):
+        sql = "SELECT DISTINCT PELICULA FROM FUNCIONES WHERE CINE = '{}' AND FECHAFUNCION = '{}'".format(cine, fechaBuscar)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchall()
+
+            return lista
+        except Exception as e:
+            raise
+    
+
+    def getPeliculasPorCine(self, cine, fechaBuscar):
+        sql = "SELECT DISTINCT HORAFUNCION, PELICULA FROM FUNCIONES WHERE CINE = '{}' AND FECHAFUNCION = '{}'".format(cine, fechaBuscar)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchall()
+
+            return lista
+        except Exception as e:
+            raise
 
 # falta consulta para saber si el registro existe:
 # select count(*) from FUNCIONES WHERE IDPELICULA = '{}' AND DEPARTAMENTO = '{}' AND CINE = '{}' AND TIPO_DOBLAJE = '{}' AND FECHAFUNCION = '{}' AND HORAFUNCION = '{}'
