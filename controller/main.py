@@ -14,7 +14,15 @@ def saludar():
     print("hola")
 
 def obtenerDatos():
-    import ObtenerDatos
+    #true>en ejecucion. false>no seguir en ejecuci[on
+    ejecucion=True 
+    while ejecucion==True:
+        try:
+            import ObtenerDatos
+            ejecucion=False
+        except Exception as e:
+            ejecucion=True
+
     obtenerCupo()
 
 def restar_hora(hora1, hora2):
@@ -33,24 +41,21 @@ def restar_hora(hora1, hora2):
 def mandarInfo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora):
     metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
     database = OperationCinepolis()
-    cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-    print(buscar_dept)
-    print(buscar_id_peli)
-    print("cupo")
-    print(cupo)
-    while cupo == None:
-        print("entró en el while")
-        metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-        cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-        print("nuevo cupo")
-        print(cupo)
+    
+    while ejecucion==True:
+        try:
+            metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+            ejecucion=False
+        except Exception as e:
+            ejecucion=True
+    
 
 def obtenerCupo():
     database = OperationCinepolis()
     horarios = database.funcionesPorDia(date.today())
     if(len(horarios)>0):
         for i in range(len(horarios)):
-            newHora = restar_hora(horarios[i][9], "01:31")
+            newHora = restar_hora(horarios[i][9], "00:36")
             schedule.every().day.at(newHora).do(mandarInfo, horarios[i][0], horarios[i][3], horarios[i][2], horarios[i][4], horarios[i][8], horarios[i][9])
     else:
         obtenerDatos()
