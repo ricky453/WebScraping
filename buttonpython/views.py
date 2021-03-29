@@ -12,5 +12,5 @@ def output(request):
     return HttpResponse("OK")
 
 def genexcel(request):
-    os.system('python backend/GenerarExcel.py GenerarExcel generarCarteleraExcel("2021-03-29")')
+    os.system('python backend/GenerarExcel.py GenerarExcel')
     return HttpResponse("OK")

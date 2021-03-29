@@ -46,6 +46,36 @@ class OperationCinepolis:
         except Exception as e:
             raise
 
+    def getCines(self, fechaBuscar):
+        sql = "SELECT DISTINCT CINE FROM FUNCIONES WHERE FECHAFUNCION = '{}'".format(fechaBuscar)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchall()
+
+            return lista
+        except Exception as e:
+            raise
+    
+    def getPeliculasFunciones(self, cine, fechaBuscar):
+        sql = "SELECT DISTINCT PELICULA FROM FUNCIONES WHERE CINE = '{}' AND FECHAFUNCION = '{}'".format(cine, fechaBuscar)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchall()
+
+            return lista
+        except Exception as e:
+            raise
+    
+
+    def getPeliculasPorCine(self, cine, fechaBuscar):
+        sql = "SELECT DISTINCT HORAFUNCION, PELICULA FROM FUNCIONES WHERE CINE = '{}' AND FECHAFUNCION = '{}'".format(cine, fechaBuscar)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchall()
+
+            return lista
+        except Exception as e:
+            raise
     
     def comprobarExistenciaFuncion(self, idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion):
         nuevalista = []
@@ -76,6 +106,17 @@ class OperationCinepolis:
         try:
             self.miCursor.execute(sql)
             lista = self.miCursor.fetchone()
+            return lista[0]
+        except Exception as e:
+            return lista
+            raise
+
+    def getCupoPelicula(self, idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala):
+        lista = None
+        sql = "SELECT ASIENTOSOCUPADOS, PELICULA FROM FUNCIONES WHERE IDPELICULA = '{}' AND DEPARTAMENTO = '{}' AND CINE = '{}' AND TIPO_DOBLAJE = '{}' AND FECHAFUNCION = '{}' AND HORAFUNCION = '{}' AND SALA = '{}'".format(idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchall()
             return lista[0]
         except Exception as e:
             return lista
