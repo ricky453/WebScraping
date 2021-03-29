@@ -73,8 +73,6 @@ class GenerarExcel:
                 
         print("Excel Generado con exito")
 
-    generarCarteleraExcel(date.today)
-
     def generarAsientosOcupadosPeliculaExcel(self, idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala):
 
         asientosOcupadosPelicula = self.consultaSql.getCupoPelicula(idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala)
@@ -110,5 +108,5 @@ class GenerarExcel:
 
 
 objExcel = GenerarExcel()
-#objExcel.generarCarteleraExcel(date.today())
+objExcel.generarCarteleraExcel(date.today())
 #objExcel.generarAsientosOcupadosPeliculaExcel('getTicket_3176', 'Santa Ana', 'MiCine Metro Centro Santa Ana', 'Tradicional - 2D DOB', date.today(), '20:45', '3')
