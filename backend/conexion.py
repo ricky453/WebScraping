@@ -6,7 +6,7 @@ class DataBase:
     #credenciales
     servidor = "localhost"
     usuario = "root"
-    contra = "12345" #vacio
+    contra = "" #vacio
     bd = "cinepolis"
 
     #creando conexion

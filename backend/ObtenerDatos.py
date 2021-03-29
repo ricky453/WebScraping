@@ -16,7 +16,7 @@ fechaActual= datetime.now()
 fechaActual= fechaActual.date()
 dia=fechaActual.day
 
-driver_path = 'C:\\Users\\ivanp\\Desktop\\TrabajoFinal\\chromedriver.exe'
+driver_path = 'C:\\Users\\ricardo.barrientos\\Desktop\\chromedriver.exe'
 
 driver = webdriver.Chrome(driver_path)
 driver.maximize_window()
