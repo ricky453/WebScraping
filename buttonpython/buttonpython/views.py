@@ -9,3 +9,8 @@ def output(request):
    print(data.text)
    data=data.text
    return render(request,'home.html',{'data':data})
+
+def mundo(request):
+    data="Hello World"
+    print(data)
+    return render(request, 'home.html', {'data':data})
