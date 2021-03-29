@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.button),
     path('output', views.output, name='script'),
+    path('genexcel', views.genexcel, name='excel'),
 ]
