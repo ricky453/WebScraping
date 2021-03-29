@@ -73,10 +73,40 @@ class GenerarExcel:
         print("Excel Generado con exito")
 
 
+    def generarAsientosOcupadosPeliculaExcel(self, idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala):
 
+        asientosOcupadosPelicula = self.consultaSql.getCupoPelicula(idPelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala)
+        print(asientosOcupadosPelicula)
+        #creando excel
+        wb = Workbook()
+        fechaActual = date.today()
+        pathSaveExcel = "temp/excel/" + fechaActual.strftime('%d-%m-%Y') +"-"+cine+"-"+departamento+"-"+asientosOcupadosPelicula[1]+ ".xlsx"
+
+        wb.save(pathSaveExcel)  #creando excel
+        wb = Workbook()
+        wb = load_workbook(pathSaveExcel)  #seleccionando libro
+
+        ws = wb.create_sheet(cine)  #creando hoja
+        wb.save(pathSaveExcel)
+
+        wb = Workbook()
+        wb = load_workbook(pathSaveExcel)  #seleccionando libro
+        #wsNames.title = "Prueba"  #podemos cambiar nombre de hoja
+
+        ws = wb[cine]  #seleccionando hoja (cine)
+
+        ws.cell(row = 1, column = 1).value = "Pelicula"
+        ws.cell(row = 1, column = 2).value = "Asientos Ocupados"
+
+        ws.cell(row = 2, column = 1).value = str(asientosOcupadosPelicula[0])   #editando, agregando nombre pelicula
+        ws.cell(row = 2, column = 2).value = str(asientosOcupadosPelicula[1])   #editando, agregando nombre pelicula
+
+        wb.save(pathSaveExcel)
+        
 
 
 
 
 objExcel = GenerarExcel()
-objExcel.generarCarteleraExcel(date.today())
+#objExcel.generarCarteleraExcel(date.today())
+#objExcel.generarAsientosOcupadosPeliculaExcel('getTicket_3176', 'Santa Ana', 'MiCine Metro Centro Santa Ana', 'Tradicional - 2D DOB', date.today(), '20:45', '3')
