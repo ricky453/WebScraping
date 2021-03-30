@@ -23,4 +23,4 @@ while cont<=5:
     comprobar.compCine(driver)
     comprobar.compHoraFuncion(driver,'//*[@id="main-app"]/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li/div[2]/div/div[2]/div[1]')
     driver.refresh()    
-    cont+
+    cont+=1

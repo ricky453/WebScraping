@@ -49,10 +49,10 @@ while count_dept<=2:
     
     time.sleep(2)
     ###SELECCIONAR PELICUAL###
-    comprobar.compPelicula(driver, '')
+    comprobar.compPelicula(driver, '//*[@id="main-app"]/div/div[5]/section[5]/div/div/div[1]')
     #cantidad de peliculas y recorrer en bucle
     count_divs_peliculas = len(driver.find_elements_by_xpath("/html/body/main/div/div/div[5]/section[5]/div/div/div"))
-    count_pelicula=1    
+    count_pelicula=1
     while count_pelicula<=count_divs_peliculas:
         text_path='/html/body/main/div/div/div[5]/section[5]/div/div/div['+str(count_pelicula)+']'
         comprobar.compPelicula(driver, text_path)
@@ -102,7 +102,7 @@ while count_dept<=2:
                         tipo_doblaje2 = driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[1]/h5').text
                     
                         wait_path.click()
-                        time.sleep(0.3)
+                        time.sleep(1)
                         
                         #seleccionar el botton
                         wait_path=wait.until(EC.element_to_be_clickable((By.XPATH, '//*[@id="buyTickets"]')))
@@ -124,10 +124,12 @@ while count_dept<=2:
                         if(countRegistro==0):
                             database.insertFunsiones(id_peli,nombre_peli,dept,nombre_cine,tipo_doblaje,fechaActual,lista_hora_sala_string[0],lista_hora_sala_string[2])
                             print('success insert')
-                        
+                        else:
+                            print('ya existe el registro')
                         driver.back()
                         time.sleep(3)
                         #localizar y seleccionar dia
+                        comprobar.compDia(driver)
                         wait_path=wait.until(EC.presence_of_element_located((By.XPATH,'//*[@id="date"]/div/div[1]/div/label/div[2]')))
                         wait_path.location_once_scrolled_into_view
                         time.sleep(0.5)

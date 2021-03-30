@@ -58,7 +58,7 @@ class Buscar_Peli:
         time.sleep(2)
         
         ###seleccionar pelicula a buscar###
-        comprobar.compPelicula(driver, '')
+        comprobar.compPelicula(driver, '//*[@id="main-app"]/div/div[5]/section[5]/div/div/div[1]')
         wait_path=wait.until(EC.presence_of_element_located((By.ID,buscar_id_peli)))
         wait_path.location_once_scrolled_into_view
 
