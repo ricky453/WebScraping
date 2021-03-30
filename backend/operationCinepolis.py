@@ -131,7 +131,3 @@ class OperationCinepolis:
         except Exception as e:
             return lista
             raise
-# falta consulta para saber si el registro existe:
-# 
-
-#database.insertCartelera(idPelicula, pelicula, departamento, cine, tipo_doblaje, fechaFuncion, horaFuncion, sala)
