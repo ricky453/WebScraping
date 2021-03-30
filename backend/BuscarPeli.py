@@ -9,8 +9,12 @@ from datetime import datetime
 #Para que la bd
 import sys
 sys.path.insert(1, 'model/operations/')
-from operationCinepolis import OperationCinepolis
 sys.path.insert(1, 'temp/chromedriver/')
+from operationCinepolis import OperationCinepolis
+
+from ComprobarElementoWeb import Comprobar
+#metodos de comprobar si se encuentra elemento en la pagina
+comprobar = Comprobar()
 
 class Buscar_Peli:
     def contarAsientos(self, buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora):
@@ -22,9 +26,8 @@ class Buscar_Peli:
         #fecha de hoy
         fechaActual= fecha
         dia=fechaActual.day
-        finalizado=False 
+        finalizado=False
 
-        #driver_path = 'C:\\Users\\ricardo.barrientos\\Desktop\\chromedriver.exe'
         driver_path = 'temp/chromedriver/chromedriver.exe'
         driver = webdriver.Chrome(driver_path)
         driver.maximize_window()
@@ -53,30 +56,32 @@ class Buscar_Peli:
                 .click()
                     
         time.sleep(2)
-        #seleccionar pelicula a buscar  
-        print('selecciona el cine por id')
+        
+        ###seleccionar pelicula a buscar###
+        comprobar.compPelicula(driver, '')
         wait_path=wait.until(EC.presence_of_element_located((By.ID,buscar_id_peli)))
         wait_path.location_once_scrolled_into_view
 
         time.sleep(0.3)
         wait_path.click()
         time.sleep(4)
-        #localiza el dia
+        ###localiza el dia###
+        comprobar.compDia(driver)
         wait_path=wait.until(EC.presence_of_element_located((By.XPATH,'//*[@id="date"]/div/div[1]/div/label/div[2]')))
         wait_path.location_once_scrolled_into_view
         time.sleep(0.5)
 
         numero_dia = driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[2]/div[1]/div/div[1]/div/label/div[2]/div/div/div[2]/span')
         #saber si la fecha actual es igual al dia seleccionado en la pagina
-        print(str(dia)+'##dias##'+numero_dia.text)
         if(dia==int(numero_dia.text)): 
             wait_path.click() 
             time.sleep(5)
-            #SELECCIONAR HORAS
+
+            ###SELECCIONAR HORAS###
+            comprobar.compCine(driver)
             wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[1]')))
             #cantidad de cines y recorrer cada uno
             count_li_cines = len(driver.find_elements_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li')) 
-            
             count_cine=1
             while count_cine<=count_li_cines:
                 encontrado=False 
@@ -86,15 +91,14 @@ class Buscar_Peli:
                     count_divs_tiposcine=len(driver.find_elements_by_xpath('//*[@id="main-app"]/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div'))
                     count_tipocine=1
                     while count_tipocine<=count_divs_tiposcine:
-                        
                         #cantidad de horarios que hay en un tipo de dobleje de una pelicula y recorrer cada uno
                         count_divs_hora=len(driver.find_elements_by_xpath('//*[@id="main-app"]/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[2]/div'))
-
                         count_hora=1
                         while count_hora<=count_divs_hora:
-                        
                             #seleccionar cada hora
                             text_path='//*[@id="main-app"]/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[2]/div['+str(count_hora)+']'
+                            comprobar.compHoraFuncion(driver, text_path)
+
                             wait_path=wait.until(EC.presence_of_element_located((By.XPATH,text_path)))
                             
                             #recolectar el tipo de doblaje cuando se recorre bucle de las horas
@@ -115,8 +119,10 @@ class Buscar_Peli:
                                     wait_path.location_once_scrolled_into_view
                                     time.sleep(0.5)
                                     wait_path.click()
-                                    time.sleep(5)
+                                    time.sleep(4)
+                                    
                                     #Contar asientos ocupados/vendidos
+                                    comprobar.compAsientos(driver)
                                     newText_path = '//*[@id="roomContainer"]/div/div[4]/div/div/div'
                                     e = driver.find_elements_by_xpath(newText_path)
                                     count = 0
@@ -148,5 +154,4 @@ class Buscar_Peli:
                         break
                 #termina if(buscar_nombre_cine==nombre_cine)  
                 count_cine+=1
-        driver.quit()            
-
+        driver.quit()  
