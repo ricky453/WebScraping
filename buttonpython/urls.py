@@ -23,5 +23,7 @@ urlpatterns = [
     path('', views.button),
     path('output', views.output, name='script'),
     path('genexcel', views.genexcel, name='excel'),
+    path('genasientos', views.genasientos, name='asientos'),
     url(r'^external/', views.external),
+    url(r'^externalCartel/', views.externalCartel),
 ]

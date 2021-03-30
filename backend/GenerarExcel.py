@@ -26,7 +26,7 @@ class GenerarExcel:
         #creando excel
         wb = Workbook()
         fechaActual = date.today()
-        pathSaveExcel = "temp/excel/" + fechaActual.strftime('%d-%m-%Y') + ".xlsx"
+        pathSaveExcel = "temp/excel/" + str(fechaBuscar) + ".xlsx"
         print(pathSaveExcel)
 
         wb.save(pathSaveExcel)  #creando excel
@@ -79,8 +79,8 @@ class GenerarExcel:
         print(asientosOcupadosPelicula)
         #creando excel
         wb = Workbook()
-        fechaActual = date.today()
-        pathSaveExcel = "temp/excel/" + fechaActual.strftime('%d-%m-%Y') +"-"+cine+"-"+departamento+"-"+asientosOcupadosPelicula[1]+ ".xlsx"
+        fechaActual = fechaBuscar
+        pathSaveExcel = "temp/excel/" + str(fechaBuscar) +"-"+cine+"-"+departamento+"-"+asientosOcupadosPelicula[1]+ ".xlsx"
 
         wb.save(pathSaveExcel)  #creando excel
         wb = Workbook()
@@ -111,7 +111,7 @@ class GenerarExcel:
         #creando excel
         wb = Workbook()
         fechaActual = date.today()
-        pathSaveExcel = "temp/excel/" + fechaActual.strftime('%d-%m-%Y') + "-asientos-ocupados.xlsx"
+        pathSaveExcel = "temp/excel/" + str(fechaBuscar) + "-asientos-ocupados.xlsx"
         print(pathSaveExcel)
 
         wb.save(pathSaveExcel)  #creando excel
