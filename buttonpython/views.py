@@ -32,6 +32,10 @@ def genasientos(request):
     generarExcel.genrAsientosOcupadosPeliculaExcel(date.today())
     return HttpResponse("OK")
 
+def geninfo(request):
+    generarExcel.genrInfoPeliculaExcel(date.today())
+    return HttpResponse("OK")
+
 def external(request):
     fecha = request.POST.get('param')
     generarExcel.genrAsientosOcupadosPeliculaExcel(fecha)
@@ -40,5 +44,10 @@ def external(request):
 def externalCartel(request):
     fecha = request.POST.get('param')
     generarExcel.generarCarteleraExcel(fecha)
+    return HttpResponse("OK")
+
+def externalInfo(request):
+    fecha = request.POST.get('param')
+    generarExcel.genrInfoPeliculaExcel(fecha)
     return HttpResponse("OK")
     

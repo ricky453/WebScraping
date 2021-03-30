@@ -131,6 +131,17 @@ class OperationCinepolis:
         except Exception as e:
             return lista
             raise
+    
+    def getPeliculas(self, cine, fechaFuncion):
+        lista = None
+        sql = "SELECT pelicula,departamento, cine,tipo_doblaje,sala,horaFuncion,asientosOcupados FROM funciones WHERE cine ='{}' AND fechaFuncion ='{}' ORDER BY departamento, sala,horaFuncion".format(cine, fechaFuncion)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchall()
+            return lista
+        except Exception as e:
+            return lista
+            raise
 # falta consulta para saber si el registro existe:
 # 
 

@@ -26,7 +26,7 @@ class GenerarExcel:
         #creando excel
         wb = Workbook()
         fechaActual = date.today()
-        pathSaveExcel = "temp/excel/" + str(fechaBuscar) + ".xlsx"
+        pathSaveExcel = "temp/excel/" + str(fechaBuscar) + "-horario.xlsx"
         print(pathSaveExcel)
 
         wb.save(pathSaveExcel)  #creando excel
@@ -165,11 +165,69 @@ class GenerarExcel:
                 
         print("Excel Generado con exito")
 
+    def genrInfoPeliculaExcel(self, fechaBuscar):
+        listaCines = self.consultaSql.getCines(fechaBuscar)  #obtiene lista de cines
+        
+        #creando excel
+        wb = Workbook()
+        fechaActual = date.today()
+        pathSaveExcel = "temp/excel/" + str(fechaBuscar) + "-info.xlsx"
+        print(pathSaveExcel)
 
+        wb.save(pathSaveExcel)  #creando excel
+        wb = Workbook()
+        wb = load_workbook(pathSaveExcel)  #seleccionando libro
+        std = wb['Sheet']
+        wb.remove(std)
+        for item in listaCines:  #recorre la lista de cines
+
+            listaPeliculasCine = self.consultaSql.getPeliculas(item[0], fechaBuscar)  #obtiene peliculas por cine
+            #print("mi print cines: " + item[0])
+            columnaPelicula = 1  #contadores
+            filaPelicula = 2
+            filaHora = 1  
+            columnaHora = 2
+
+
+            listaPeliculasCineHoras = self.consultaSql.getPeliculasPorCine(item[0], fechaBuscar) #get horas y peliculas
+            ws = wb.create_sheet(item[0],1)  #creando hoja
+            wb.save(pathSaveExcel)
+
+            #print(listaPeliculasCineHoras[0][1])
+
+
+            for elemento in listaPeliculasCine:  #recorre peliculas por cine
+
+                wb = Workbook()
+                wb = load_workbook(pathSaveExcel)  #seleccionando libro
+                #wsNames.title = "Prueba"  #podemos cambiar nombre de hoja
+
+                ws = wb[item[0]]  #seleccionando hoja (cine)
+                ws.cell(row = 1, column= 1).value = 'Departamento'
+                ws.cell(row = 1, column= 2).value = "Cine"
+                ws.cell(row = 1, column= 3).value = "Sala"
+                ws.cell(row = 1, column= 4).value = "Nombre Película"
+                ws.cell(row = 1, column= 5).value = "Tipo Doblaje"
+                ws.cell(row = 1, column= 6).value = "Función"
+                ws.cell(row = 1, column= 7).value = "Asientos ocupados"
+
+                ws.cell(row = filaPelicula, column= columnaPelicula).value = elemento[1]  #dept
+                ws.cell(row = filaPelicula, column= 2).value = elemento[2]  #cine
+                ws.cell(row = filaPelicula, column= 3).value = elemento[4]  #sala
+                ws.cell(row = filaPelicula, column= 4).value = elemento[0]  #editando, agregando nombre pelicula
+                ws.cell(row = filaPelicula, column= 5).value = elemento[3]  #doblaje
+                ws.cell(row = filaPelicula, column= 6).value = elemento[5]  #funcion
+                ws.cell(row = filaPelicula, column= 7).value = elemento[6]  #asientos
+
+                filaPelicula = filaPelicula + 1
+
+                wb.save(pathSaveExcel)
+                
+        print("Excel Generado con exito")
 
 
 objExcel = GenerarExcel()
 #objExcel.generarCarteleraExcel(date.today())
 #objExcel.genrAsientosOcupadosPeliculaExcel('2021-03-26')
-objExcel.genrAsientosOcupadosPeliculaExcel('2021-03-26')
+#objExcel.genrInfoPeliculaExcel('2021-03-30')
 #objExcel.generarAsientosOcupadosPeliculaExcel('getTicket_3176', 'Santa Ana', 'MiCine Metro Centro Santa Ana', 'Tradicional - 2D DOB', date.today(), '20:45', '3')
