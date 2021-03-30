@@ -16,7 +16,7 @@ class OperationCinepolis:
     
     def funcionesPorDia(self, fechaFuncion):
         nuevalista = []
-        sql = "SELECT * FROM FUNCIONES WHERE FECHAFUNCION = '{}' ORDER BY HORAFUNCION ASC".format(fechaFuncion)
+        sql = "SELECT IDPELICULA, PELICULA,CINE,DEPARTAMENTO,tipo_doblaje,SALA,asientosOcupados,asientosTotales,fechaFuncion,horaFuncion FROM FUNCIONES WHERE FECHAFUNCION = '{}' ORDER BY HORAFUNCION ASC".format(fechaFuncion)
 
         try:
             self.miCursor.execute(sql)
@@ -102,7 +102,7 @@ class OperationCinepolis:
             raise
 
     def deleteFuncitions(self, fechaFuncion):
-        sql = "SELECT * FROM FUNCIONES WHERE FECHAFUNCION = '{}'".format(fechaFuncion)
+        sql = "SELECT IDPELICULA, PELICULA,CINE,DEPARTAMENTO,tipo_doblaje,SALA,asientosOcupados,asientosTotales,fechaFuncion,horaFuncion FROM FUNCIONES WHERE FECHAFUNCION = '{}'".format(fechaFuncion)
         print(sql)
         try:
             self.miCursor.execute(sql)
