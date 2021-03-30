@@ -32,7 +32,8 @@ class GenerarExcel:
         wb.save(pathSaveExcel)  #creando excel
         wb = Workbook()
         wb = load_workbook(pathSaveExcel)  #seleccionando libro
-        
+        std = wb['Sheet']
+        wb.remove(std)
         for item in listaCines:  #recorre la lista de cines
 
             listaPeliculasCine = self.consultaSql.getPeliculasFunciones(item[0], fechaBuscar)  #obtiene peliculas por cine
@@ -85,6 +86,8 @@ class GenerarExcel:
         wb.save(pathSaveExcel)  #creando excel
         wb = Workbook()
         wb = load_workbook(pathSaveExcel)  #seleccionando libro
+        std = wb['Sheet']
+        wb.remove(std)
 
         ws = wb.create_sheet(cine)  #creando hoja
         wb.save(pathSaveExcel)
@@ -117,7 +120,8 @@ class GenerarExcel:
         wb.save(pathSaveExcel)  #creando excel
         wb = Workbook()
         wb = load_workbook(pathSaveExcel)  #seleccionando libro
-        
+        std = wb['Sheet']
+        wb.remove(std)
         for item in listaCines:  #recorre la lista de cines
 
             listaPeliculasCine = self.consultaSql.getPeliculasFunciones(item[0], fechaBuscar)  #obtiene peliculas por cine
@@ -165,7 +169,7 @@ class GenerarExcel:
 
 
 objExcel = GenerarExcel()
-objExcel.generarCarteleraExcel(date.today())
+#objExcel.generarCarteleraExcel(date.today())
 #objExcel.genrAsientosOcupadosPeliculaExcel('2021-03-26')
-#objExcel.genrAsientosOcupadosPeliculaExcel('2021-03-26')
+objExcel.genrAsientosOcupadosPeliculaExcel('2021-03-26')
 #objExcel.generarAsientosOcupadosPeliculaExcel('getTicket_3176', 'Santa Ana', 'MiCine Metro Centro Santa Ana', 'Tradicional - 2D DOB', date.today(), '20:45', '3')
