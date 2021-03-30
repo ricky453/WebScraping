@@ -135,7 +135,7 @@ class GenerarExcel:
             #print(listaPeliculasCineHoras[0][1])
 
             for elemento in listaPeliculasCine:  #recorre peliculas por cine
-
+                columnaAsientosOcupados = 3
                 wb = Workbook()
                 wb = load_workbook(pathSaveExcel)  #seleccionando libro
                 #wsNames.title = "Prueba"  #podemos cambiar nombre de hoja
@@ -166,5 +166,6 @@ class GenerarExcel:
 
 objExcel = GenerarExcel()
 objExcel.generarCarteleraExcel(date.today())
-#objExcel.genrAsientosOcupadosPeliculaExcel('2021-03-27')
+#objExcel.genrAsientosOcupadosPeliculaExcel('2021-03-26')
+#objExcel.genrAsientosOcupadosPeliculaExcel('2021-03-26')
 #objExcel.generarAsientosOcupadosPeliculaExcel('getTicket_3176', 'Santa Ana', 'MiCine Metro Centro Santa Ana', 'Tradicional - 2D DOB', date.today(), '20:45', '3')
