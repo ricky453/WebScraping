@@ -12,6 +12,10 @@ sys.path.insert(1, 'model/operations/')
 sys.path.insert(1, 'temp/chromedriver/')
 from operationCinepolis import OperationCinepolis
 
+from ComprobarElementoWeb import Comprobar
+#metodos de comprobar si se encuentra elemento en la pagina
+comprobar = Comprobar()
+
 #fecha de hoy
 fechaActual= datetime.now()
 fechaActual= fechaActual.date()
@@ -44,14 +48,14 @@ while count_dept<=2:
     wait.until(EC.element_to_be_clickable((By.XPATH,'//*[@id="-1"]'))).click()
     
     time.sleep(2)
-    #SELECCIONAR PELICUAL
-    
+    ###SELECCIONAR PELICUAL###
+    comprobar.compPelicula(driver, '')
     #cantidad de peliculas y recorrer en bucle
     count_divs_peliculas = len(driver.find_elements_by_xpath("/html/body/main/div/div/div[5]/section[5]/div/div/div"))
     count_pelicula=1    
     while count_pelicula<=count_divs_peliculas:
-
         text_path='/html/body/main/div/div/div[5]/section[5]/div/div/div['+str(count_pelicula)+']'
+        comprobar.compPelicula(driver, text_path)
         wait_path=wait.until(EC.presence_of_element_located((By.XPATH,text_path)))
         wait_path.location_once_scrolled_into_view
 
@@ -60,7 +64,8 @@ while count_dept<=2:
         time.sleep(0.3)
         wait_path.click()
         time.sleep(4)
-        #localiza el dia
+        ###localiza el dia###
+        comprobar.compDia(driver)
         wait_path=wait.until(EC.presence_of_element_located((By.XPATH,'//*[@id="date"]/div/div[1]/div/label/div[2]')))
         wait_path.location_once_scrolled_into_view
         time.sleep(0.5)
@@ -70,12 +75,12 @@ while count_dept<=2:
         if(dia==int(numero_dia.text)): #saber si la fecha actual es igual al dia seleccionado en la pagina
             wait_path.click() 
             time.sleep(5)
-            #SELECCIONAR HORAS
-            #cantidad de cines y recorrer cada uno
 
+            ###SELECCIONAR HORAS###
+            comprobar.compCine(driver)
             wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[1]')))
+            #cantidad de cines y recorrer cada uno
             count_li_cines = len(driver.find_elements_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li')) 
-            
             count_cine=1
             while count_cine<=count_li_cines:
                 #cantidad de tipos de doblaje que tiene la pelicula y recorrer cada uno
@@ -84,11 +89,12 @@ while count_dept<=2:
                 while count_tipocine<=count_divs_tiposcine:
                     #cantidad de horarios que hay en un tipo de dobleje de una pelicula y recorrer cada uno
                     count_divs_hora=len(driver.find_elements_by_xpath('//*[@id="main-app"]/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[2]/div'))
-                    
                     count_hora=1
                     while count_hora<=count_divs_hora:
-                        
+                        #se selecciona hora
                         text_path='//*[@id="main-app"]/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li['+str(count_cine)+']/div[2]/div['+str(count_tipocine)+']/div[2]/div['+str(count_hora)+']'
+                        comprobar.compHoraFuncion(driver, text_path)
+                        
                         wait_path=wait.until(EC.presence_of_element_located((By.XPATH,text_path)))
                         wait_path.location_once_scrolled_into_view
                         time.sleep(0.5)
@@ -106,6 +112,7 @@ while count_dept<=2:
                         time.sleep(2)
 
                         ###recolectar datos### 
+                        comprobar.compDatosFuncion(driver)
                         nombre_peli=driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/div/div/div/div[2]/div[1]').text
                         nombre_cine=driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/div/div/div/div[2]/div[2]').text
                         hora_sala=driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/div/div/div/div[2]/div[4]').text
