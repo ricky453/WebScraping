@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Cinepolis Web Scrapping</title>
+<title>Cinepolis Web Scraping</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
 
@@ -200,7 +200,8 @@ footer {
 		<div style="text-align: center;">
 			<button onclick="location.href='{%url 'script'%}'" class="btn btn-primary">Obtener Datos de Cines</button><hr>
 			<button onclick="location.href='{%url 'excel'%}'" class="btn btn-primary">Generar Horario Día Hoy</button>
-			<button onclick="location.href='{%url 'asientos'%}'" class="btn btn-primary">Ver Asientos ocupados Día Hoy</button>
+			<button onclick="location.href='{%url 'asientos'%}'" class="btn btn-primary">Ver Asientos Ocupados Día Hoy</button>
+			<button onclick="location.href='{%url 'info'%}'" class="btn btn-primary">Ver Información por Cine</button>
 			<hr>
 
 		</div>
@@ -217,6 +218,8 @@ footer {
 
 <!--Genera asientos ocupados-->
 <div>
+	<p class="historico" style="text-align: center;">HISTÓRICO</p>
+	<br>
     <form action="/externalCartel/" method="post" style="text-align: center;">
         {% csrf_token %}
         Ingrese fecha:
@@ -231,6 +234,14 @@ footer {
         <input type="text" name="param" required placeholder="YYYY-MM-DD" > <br><br>
         </select>
         <input type="submit" value="Ver Asientos ocupados Fecha Especifica" class="btn btn-primary">
+    </form>
+	<br>
+	<form action="/externalInfo/" method="post" style="text-align: center;">
+        {% csrf_token %}
+        Ingrese fecha:
+        <input type="text" name="param" required placeholder="YYYY-MM-DD" > <br><br>
+        </select>
+        <input type="submit" value="Ver Información por Cine" class="btn btn-primary">
     </form>
 
 </div>
