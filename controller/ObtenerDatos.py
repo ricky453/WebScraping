@@ -18,7 +18,6 @@ fechaActual= fechaActual.date()
 dia=fechaActual.day
 
 driver_path = 'temp/chromedriver/chromedriver.exe'
-
 driver = webdriver.Chrome(driver_path)
 driver.maximize_window()
 # Inicializamos el navegador
@@ -73,6 +72,7 @@ while count_dept<=2:
             time.sleep(5)
             #SELECCIONAR HORAS
             #cantidad de cines y recorrer cada uno
+
             wait.until(EC.presence_of_element_located((By.XPATH, '/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li[1]')))
             count_li_cines = len(driver.find_elements_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[4]/ul/li')) 
             
@@ -135,4 +135,3 @@ while count_dept<=2:
         count_pelicula+=1
     count_dept+=1
 driver.quit()
-

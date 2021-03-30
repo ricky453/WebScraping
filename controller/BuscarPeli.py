@@ -23,9 +23,8 @@ class Buscar_Peli:
         fechaActual= fecha
         dia=fechaActual.day
         finalizado=False
-        driver_path = 'temp/chromedriver/chromedriver.exe'
 
-        driver_path = 'C:\\Users\\ricardo.barrientos\\Desktop\\chromedriver.exe'
+        driver_path = 'temp/chromedriver/chromedriver.exe'
         driver = webdriver.Chrome(driver_path)
         driver.maximize_window()
         # Inicializamos el navegador
@@ -53,8 +52,8 @@ class Buscar_Peli:
                 .click()
                     
         time.sleep(2)
-        #seleccionar pelicula a buscar  
-        print('selecciona el cine por id')
+        
+        #seleccionar pelicula a buscar
         wait_path=wait.until(EC.presence_of_element_located((By.ID,buscar_id_peli)))
         wait_path.location_once_scrolled_into_view
 
@@ -68,7 +67,6 @@ class Buscar_Peli:
 
         numero_dia = driver.find_element_by_xpath('/html/body/main/div/div/div[5]/div/div[2]/section/div[2]/div[2]/div[1]/div/div[2]/div[1]/div/div[1]/div/label/div[2]/div/div/div[2]/span')
         #saber si la fecha actual es igual al dia seleccionado en la pagina
-        print(str(dia)+'##dias##'+numero_dia.text)
         if(dia==int(numero_dia.text)): 
             wait_path.click() 
             time.sleep(5)
@@ -148,5 +146,4 @@ class Buscar_Peli:
                         break
                 #termina if(buscar_nombre_cine==nombre_cine)  
                 count_cine+=1
-        driver.quit()            
-
+        driver.quit()  
