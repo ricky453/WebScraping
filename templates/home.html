@@ -194,12 +194,17 @@ footer {
   <!-- Footer Section -->
   <section class="footer_banner" id="contact">
     <h2 class="hidden">Footer Banner Section </h2>
-    
-		<p class="indicaciones">SELECCIONE LA ACCIÓN QUE DESEA REALIZAR</p>
 	
-    <button onclick="location.href='{%url 'script'%}'" class="btn btn-primary">Obtener Datos de Cines</button><hr>
+		<p class="indicaciones">SELECCIONE LA ACCIÓN QUE DESEA REALIZAR</p>
+		<br><br>
+		<div style="text-align: center;">
+			<button onclick="location.href='{%url 'script'%}'" class="btn btn-primary">Obtener Datos de Cines</button><hr>
+			<button onclick="location.href='{%url 'excel'%}'" class="btn btn-primary">Generar Horario Día Hoy</button>
+			<button onclick="location.href='{%url 'asientos'%}'" class="btn btn-primary">Ver Asientos ocupados Día Hoy</button>
+			<hr>
 
-<button onclick="location.href='{%url 'excel'%}'" class="btn btn-primary">Generar Horarios Funciones</button><hr>
+		</div>
+
 
 <!--<form action="/external/" method="post">
     {% csrf_token %}
@@ -212,13 +217,20 @@ footer {
 
 <!--Genera asientos ocupados-->
 <div>
-    <form action="/external/" method="post">
+    <form action="/externalCartel/" method="post" style="text-align: center;">
         {% csrf_token %}
-        Input text:
+        Ingrese fecha:
         <input type="text" name="param" required placeholder="YYYY-MM-DD" > <br><br>
-        <br><br>
         </select>
-        <input type="submit" value="Ver asientos ocupados" class="btn btn-primary">
+		<input type="submit" value="Generar Horario Fecha Especifica" class="btn btn-primary">
+    </form>
+	<br>
+	<form action="/external/" method="post" style="text-align: center;">
+        {% csrf_token %}
+        Ingrese fecha:
+        <input type="text" name="param" required placeholder="YYYY-MM-DD" > <br><br>
+        </select>
+        <input type="submit" value="Ver Asientos ocupados Fecha Especifica" class="btn btn-primary">
     </form>
 
 </div>

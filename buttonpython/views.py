@@ -28,8 +28,17 @@ def genexcel(request):
     generarExcel.generarCarteleraExcel(date.today())
     return HttpResponse("OK")
 
+def genasientos(request):
+    generarExcel.genrAsientosOcupadosPeliculaExcel(date.today())
+    return HttpResponse("OK")
+
 def external(request):
     fecha = request.POST.get('param')
     generarExcel.genrAsientosOcupadosPeliculaExcel(fecha)
+    return HttpResponse("OK")
+
+def externalCartel(request):
+    fecha = request.POST.get('param')
+    generarExcel.generarCarteleraExcel(fecha)
     return HttpResponse("OK")
     
