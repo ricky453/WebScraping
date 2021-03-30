@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.button),
     path('output', views.output, name='script'),
+    path('output2', views.output2, name='script2'),
     path('genexcel', views.genexcel, name='excel'),
     path('genasientos', views.genasientos, name='asientos'),
     path('geninfo', views.geninfo, name='info'),

@@ -24,6 +24,10 @@ def output(request):
     os.system('python backend/main.py')
     return HttpResponse("OK")
 
+def output2(request):
+    os.system('python backend/main2.py')
+    return HttpResponse("OK")
+
 def genexcel(request):
     generarExcel.generarCarteleraExcel(date.today())
     return HttpResponse("OK")
