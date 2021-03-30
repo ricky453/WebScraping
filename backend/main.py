@@ -33,15 +33,28 @@ def restar_hora(hora1, hora2):
 
 def mandarInfo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora):
     metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+    database = OperationCinepolis()
+    cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+    intentos = 0
+    while cupo == None:
+        print("No capturó nada")
+        if intentos < 5:
+            metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+            cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+            intentos = intentos + 1
+            print("Intentos: " + str(intentos))
+        else:
+            break
     
     
 
 def obtenerCupo():
+    print("Se están obteniendo los cupos...")
     database = OperationCinepolis()
     horarios = database.funcionesPorDia(date.today())
     if(len(horarios)>0):
         for i in range(len(horarios)):
-            newHora = restar_hora(horarios[i][9], "00:02")
+            newHora = restar_hora(horarios[i][9], "00:05")
             schedule.every().day.at(newHora).do(mandarInfo, horarios[i][0], horarios[i][3], horarios[i][2], horarios[i][4], horarios[i][8], horarios[i][9])
     else:
         obtenerDatos()
