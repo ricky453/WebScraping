@@ -5,7 +5,7 @@ from datetime import date
 from BuscarPeli import Buscar_Peli
 
 import sys
-sys.path.insert(1, 'model/operations/')
+sys.path.insert(1, './')
 from operationCinepolis import OperationCinepolis
 
 metodo = Buscar_Peli()
@@ -63,7 +63,7 @@ def obtenerCupo():
 
 # Time
 schedule.every().day.at("07:00").do(obtenerDatos)
-
+obtenerDatos()
 obtenerCupo()
 
 while True:

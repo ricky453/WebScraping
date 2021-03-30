@@ -10,6 +10,7 @@ from datetime import datetime
 import sys
 sys.path.insert(1, 'model/operations/')
 from operationCinepolis import OperationCinepolis
+sys.path.insert(1, 'temp/chromedriver/')
 
 class Buscar_Peli:
     def contarAsientos(self, buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora):
@@ -23,7 +24,8 @@ class Buscar_Peli:
         dia=fechaActual.day
         finalizado=False 
 
-        driver_path = 'C:\\Users\\ricardo.barrientos\\Desktop\\chromedriver.exe'
+        #driver_path = 'C:\\Users\\ricardo.barrientos\\Desktop\\chromedriver.exe'
+        driver_path = 'temp/chromedriver/chromedriver.exe'
         driver = webdriver.Chrome(driver_path)
         driver.maximize_window()
         # Inicializamos el navegador

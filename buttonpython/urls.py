@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
 from . import views
 
 urlpatterns = [
@@ -22,4 +23,5 @@ urlpatterns = [
     path('', views.button),
     path('output', views.output, name='script'),
     path('genexcel', views.genexcel, name='excel'),
+    url(r'^external/', views.external),
 ]

@@ -2,6 +2,19 @@ from django.shortcuts import render
 import requests
 import os
 from django.http import HttpResponse
+from subprocess import run, PIPE
+import sys
+from datetime import datetime
+from datetime import date
+
+sys.path.insert(1, 'backend/')
+from GenerarExcel import GenerarExcel
+
+generarExcel = GenerarExcel()
+
+
+def __init__(self):
+        sql = "vacio"
 
 def button(request):
     return render(request, 'home.html')
@@ -12,5 +25,11 @@ def output(request):
     return HttpResponse("OK")
 
 def genexcel(request):
-    os.system('python backend/GenerarExcel.py GenerarExcel')
+    generarExcel.generarCarteleraExcel(date.today())
     return HttpResponse("OK")
+
+def external(request):
+    fecha = request.POST.get('param')
+    generarExcel.genrAsientosOcupadosPeliculaExcel(fecha)
+    return HttpResponse("OK")
+    

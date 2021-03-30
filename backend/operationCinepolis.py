@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(1,'model/conexion/') 
+sys.path.insert(1,'./conexion/') 
 from conexion import DataBase
 import datetime
 from datetime import date
@@ -69,6 +69,16 @@ class OperationCinepolis:
 
     def getPeliculasPorCine(self, cine, fechaBuscar):
         sql = "SELECT DISTINCT HORAFUNCION, PELICULA FROM FUNCIONES WHERE CINE = '{}' AND FECHAFUNCION = '{}'".format(cine, fechaBuscar)
+        try:
+            self.miCursor.execute(sql)
+            lista = self.miCursor.fetchall()
+
+            return lista
+        except Exception as e:
+            raise
+
+    def getPeliculasPorCineCupos(self, cine, fechaBuscar):
+        sql = "SELECT DISTINCT HORAFUNCION, PELICULA, ASIENTOSOCUPADOS FROM FUNCIONES WHERE CINE = '{}' AND FECHAFUNCION = '{}'".format(cine, fechaBuscar)
         try:
             self.miCursor.execute(sql)
             lista = self.miCursor.fetchall()
