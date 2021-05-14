@@ -41,7 +41,7 @@ def obtenerCupo():
     horarios = database.funcionesPorDia(date.today())
     if(len(horarios)>0):
         for i in range(len(horarios)):
-            newHora = restar_hora(horarios[i][9], "00:02")
+            newHora = restar_hora(horarios[i][9], "00:05")
             schedule.every().day.at(newHora).do(mandarInfo, horarios[i][0], horarios[i][3], horarios[i][2], horarios[i][4], horarios[i][8], horarios[i][9])
     else:
         obtenerDatos()

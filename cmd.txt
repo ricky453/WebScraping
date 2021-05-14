@@ -1,0 +1,10 @@
+correr:
+python manage.py runserver 127.0.0.1:8082
+Pip install schedule
+ pip install requests
+pip install django
+pip install openpyxl
+pip install sys
+pythton -m pip install --updrade pip	
+pyp install PyMySQL
+pip install mysql-connector
