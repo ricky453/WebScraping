@@ -33,7 +33,18 @@ def restar_hora(hora1, hora2):
 
 def mandarInfo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora):
     metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
-
+    database = OperationCinepolis()
+    cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+    intentos = 0
+    while cupo == None:
+        print("No capturó nada")
+        if intentos < 5:
+            metodo.contarAsientos(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+            cupo = database.getCupo(buscar_id_peli, buscar_dept, buscar_nombre_cine, buscar_tipo_doblaje, fecha, buscar_hora)
+            intentos = intentos + 1
+            print("Intentos: " + str(intentos))
+        else:
+            break
     
     
 
